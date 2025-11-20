@@ -24,7 +24,7 @@ List habits owned by the authenticated user
 
 Structured input/output through Pydantic schemas
 
-🗓 Habit Logs
+Habit Logs
 
 Mark a habit as completed for a selected date (or today by default)
 
@@ -40,7 +40,7 @@ Maximum historical streak
 
 Fully computed server-side
 
-🛠 Architecture
+Architecture
 
 Organized in a clean, scalable structure:
 
