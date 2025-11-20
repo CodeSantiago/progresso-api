@@ -3,7 +3,6 @@ Progresso API
 Progresso API is a REST backend built with FastAPI and PostgreSQL.
 It provides user authentication, habit management, daily log tracking, and streak calculations.
 The project follows a modular and scalable architecture, suitable for learning or production use.
-
 1. Features
 1.1 Authentication
 
