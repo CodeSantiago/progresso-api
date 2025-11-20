@@ -1,65 +1,66 @@
 Progresso API
 
-A habit-tracking REST API built with FastAPI + PostgreSQL + JWT Authentication
+Progresso API is a REST backend built with FastAPI and PostgreSQL.
+It provides user authentication, habit management, daily log tracking, and streak calculations.
+The project follows a modular and scalable architecture, suitable for learning or production use.
 
-Progresso API is a backend system designed to help users create habits, track daily completions, and calculate streaks.
-It includes user authentication, secure JWT-based sessions, and a clean service-oriented architecture.
-
-Features
-Authentication
+1. Features
+1.1 Authentication
 
 User registration
 
-Login with JWT
+Login with JWT tokens
 
-Protected routes using token-based auth
+Token-based route protection
 
 Secure password hashing with bcrypt
 
-Habits
+1.2 Habits
 
-Create, update, delete habits
+Create habits
 
-List habits owned by the authenticated user
+Update habits
 
-Structured input/output through Pydantic schemas
+Delete habits
 
-Habit Logs
+List habits per user
 
-Mark a habit as completed for a selected date (or today by default)
+1.3 Habit Logs
+
+Mark a habit as completed for a specific date (or today)
 
 Prevent duplicate logs
 
-Retrieve all logs per habit
+Retrieve all logs for a habit
 
-Streak Calculation
+1.4 Streaks
 
-Current streak (today → backwards)
+Current streak calculation
 
 Maximum historical streak
 
-Fully computed server-side
+Based on consecutive daily completions
 
-Architecture
-
-Organized in a clean, scalable structure:
-
+2. Project Structure
 app/
-│── api/          # Route definitions
-│── core/         # Security, auth utilities
-│── db/           # Database connection + session
+│── api/          # Route definitions (auth, habits, logs, stats)
+│── core/         # JWT, security utilities
+│── db/           # Database session and engine
 │── models/       # SQLAlchemy ORM models
-│── schemas/      # Pydantic models
+│── schemas/      # Pydantic input/output schemas
 │── services/     # Business logic
-│── main.py       # FastAPI entrypoint
+│── main.py       # FastAPI application entrypoint
 
-Tech Stack
+
+This architecture separates concerns clearly and allows future expansion without rewriting core components.
+
+3. Tech Stack
 
 FastAPI
 
 PostgreSQL
 
-SQLAlchemy
+SQLAlchemy ORM
 
 Pydantic
 
@@ -67,79 +68,63 @@ JWT Authentication
 
 bcrypt
 
-Railway Deployment
+Railway (deployment)
 
-Installation (Local Development)
-1️ Clone the repo
+4. Local Installation
+4.1 Clone the repository
 git clone https://github.com/CodeSantiago/progresso-api.git
 cd progresso-api
 
-2️ Create virtual environment
+4.2 Create and activate a virtual environment
 python -m venv venv
-source venv/bin/activate   # Linux / Mac
+source venv/bin/activate   # macOS / Linux
 venv\Scripts\activate      # Windows
 
-3️ Install dependencies
+4.3 Install dependencies
 pip install -r requirements.txt
 
-4️ Set environment variables
-
-Create a .env file:
-
+4.4 Create the .env file
 DATABASE_URL=postgresql://user:password@localhost:5432/progresso
 SECRET_KEY=your_secret_key_here
 
-5️ Run FastAPI server
+4.5 Run the API locally
 uvicorn app.main:app --reload
 
-Deployment (Railway)
-
-This project is fully configured to deploy on Railway.
-You will need:
-
-Procfile with uvicorn start command
-
-Environment variables set in the Railway dashboard
-
-PostgreSQL service connected
-
-Railway automatically builds and deploys on every push to GitHub.
-
-API Documentation
+5. API Documentation
 
 Once running, visit:
 
 http://localhost:8000/docs
 
 
-or production URL if deployed on Railway.
+Interactive API documentation is available through Swagger UI.
 
-Authentication Flow
+6. Authentication Flow
 
-User registers with email + password
+User registers with email and password
 
-User logs in → receives JWT access token
+User logs in and receives an access token
 
-Every protected request sends:
+Protected routes require:
 
 Authorization: Bearer <token>
 
-Example Requests
-Register
+7. Example Requests
+7.1 User Registration
 POST /auth/register
 {
   "email": "user@example.com",
   "password": "example123"
 }
 
-Login
+7.2 Login
 POST /auth/login
 {
   "email": "user@example.com",
   "password": "example123"
 }
 
-Create Habit
+7.3 Create Habit
 POST /habits/
 Authorization: Bearer <token>
 {
@@ -147,23 +132,35 @@ Authorization: Bearer <token>
   "description": "Read 20 minutes"
 }
 
-Mark Completion
+7.4 Mark Habit Completion
 POST /habits/1/log
 Authorization: Bearer <token>
 {
   "completion_date": "2025-11-20"
 }
 
-Author
+8. Deployment (Railway)
+
+Progresso API is configured for deployment on Railway. For a successful deployment:
+
+Add the environment variables in Railway:
+
+DATABASE_URL
+
+SECRET_KEY
+
+Include the Procfile at the project root:
+
+web: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+
+
+Deploy automatically from GitHub on each push.
+
+9. Author
 
 Santiago López
-Project built from scratch while learning backend architecture, authentication, and cloud deployment.
-Guided step by step with the goal of building production-ready APIs.
+Progresso API was built as a full backend learning project, including architecture, authentication, database design and deployment.
 
-Contributions
-
-This project is personal learning, but improvements, suggestions, and pull requests are welcome.
-
-📄 License
+10. License
 
 MIT License.
