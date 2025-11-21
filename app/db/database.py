@@ -2,12 +2,11 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 import os
 
-
 DATABASE_URL = os.getenv("DATABASE_URL")
 
+# PARA POSTGRES -> NO CONNECT_ARGS
 engine = create_engine(
-    DATABASE_URL,
-    connect_args={"check_same_thread": False}
+    DATABASE_URL
 )
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
@@ -24,5 +23,6 @@ def get_db():
 
 
 def create_tables():
-    from app.models import user 
+    # Import models so SQLAlchemy knows them
+    from app.models import user, habit, habit_log
     Base.metadata.create_all(bind=engine)
